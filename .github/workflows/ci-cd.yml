@@ -1,4 +1,4 @@
-name: Deploy GBFS Project
+name: Deploy GBFS Projects
 
 on:
   push:
