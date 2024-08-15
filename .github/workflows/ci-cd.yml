@@ -1,16 +1,11 @@
-name: Deploy GBFS Project
+name: Terraform Destroy Workflow
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
-  terraform:
-    name: Terraform
+  terraform-destroy:
+    name: Destroy Terraform Resources
     runs-on: ubuntu-latest
 
     steps:
@@ -27,62 +22,12 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 # Ensure this is the correct region
+          aws-region: us-west-1
 
       - name: Terraform Init
         run: terraform init
         working-directory: terraform/
 
-      - name: Terraform Plan
-        run: terraform plan
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
         working-directory: terraform/
-
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve
-        working-directory: terraform/
-
-  lambda-deploy:
-    name: Deploy Lambda Function
-    runs-on: ubuntu-latest
-    needs: terraform
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.8"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Package Lambda function
-        run: |
-          mkdir -p lambda_package
-          cp gbfs-monitoring-solution/lambda/handler.py lambda_package/
-          cd lambda_package
-          zip -r ../function.zip .
-
-      - name: Upload Lambda function to S3
-        run: |
-          aws s3 cp function.zip s3://my-gbfs-test-bucket/lambda/function.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1 # Ensure this is the correct region
-
-      - name: Deploy Lambda function
-        run: |
-          aws lambda update-function-code \
-            --function-name gbfs_processor \
-            --s3-bucket my-gbfs-test-bucket \
-            --s3-key lambda/function.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1 # Ensure this is the correct region
