@@ -13,7 +13,6 @@ module "sns" {
 module "iam_role" {
   source = "../modules/iam_role"
 }
-
 module "lambda" {
   source         = "../modules/lambda"
   s3_bucket_name = module.s3.bucket_name
