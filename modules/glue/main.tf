@@ -1,3 +1,18 @@
+resource "aws_athena_named_query" "create_trends_table" {
+  name        = "create_trends_table"
+  database    = aws_athena_database.gbfs.name
+  query       = <<EOF
+    CREATE EXTERNAL TABLE IF NOT EXISTS trends (
+      column_name STRING
+    )
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    STORED AS TEXTFILE
+    LOCATION 's3://${var.s3_bucket_name}/athena/tables/trends.csv';
+  EOF
+  workgroup   = "primary"
+}
+
 resource "aws_glue_catalog_database" "gbfs" {
   name = "my_new_gbfs" # Name of the Glue catalog database
 }
@@ -23,15 +38,4 @@ resource "aws_athena_database" "gbfs" {
   name   = "gbfs"             # Name of the Athena database
   bucket = var.s3_bucket_name # S3 bucket for Athena results
 
-}
-resource "aws_athena_table" "trends" {
-  name          = "trends"
-  database_name = aws_athena_database.gbfs.name
-  bucket        = var.s3_bucket_name
-  key           = "athena/tables/trends.csv"
-  format        = "CSV"
-  columns {
-    name = "column_name"
-    type = "string"
-  }
 }

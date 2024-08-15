@@ -20,20 +20,19 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.0 # Specify your desired Terraform version
+          terraform_version: 1.5.0 # Use your desired Terraform version
+
+      - name: Change directory to Terraform configuration
+        run: cd terraform_directory # Change this to the directory containing your Terraform configuration files
 
       - name: Terraform Init
         run: terraform init
-        working-directory: terraform # Ensure this points to where your .tf files are located
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
-        working-directory: terraform # Ensure this points to where your .tf files are located
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
-
   lambda-deploy:
     name: Deploy Lambda Function
     runs-on: ubuntu-latest
@@ -55,8 +54,10 @@ jobs:
 
       - name: Package Lambda function
         run: |
-          cd lambda  # Navigate to the directory containing the Lambda function code
-          zip -r ../lambda_function.zip .  # Zip the contents of the directory
+          mkdir -p lambda_package
+          cp -r lambda_code/* lambda_package/
+          cd lambda_package
+          zip -r ../lambda_function.zip .
 
       - name: Deploy Lambda function
         run: |

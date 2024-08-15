@@ -59,6 +59,8 @@ To enable the CI/CD pipeline:
 3. **Automate QuickSight Setup**:
    - Automate the setup and configuration of QuickSight dashboards using the AWS SDK. This would streamline the process of creating visualizations and ensure consistency across different environments.
 
+4. Properly test the github actions.
+
 ## Final Thoughts
 
 The infrastructure and code provided in this project deliver a robust, scalable solution for processing and analyzing GBFS data. If I had more time, I would enhance the predictive analytics by incorporating machine learning models and improve the automation of the QuickSight setup.
