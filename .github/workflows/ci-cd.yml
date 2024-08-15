@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   terraform:
@@ -91,7 +92,7 @@ jobs:
     name: Destroy Terraform Resources
     runs-on: ubuntu-latest
     needs: terraform
-    if: github.event_name == 'workflow_dispatch'  # Allows manual triggering
+    if: ${{ github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' }}  # Adjust condition as needed
 
     steps:
       - name: Checkout code
