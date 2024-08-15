@@ -22,11 +22,16 @@ jobs:
         with:
           terraform_version: 1.5.0 # Use your desired Terraform version
 
+      - name: Change directory to Terraform configuration
+        run: cd terraform # Assuming Terraform files are in the 'terraform' directory
+
       - name: Terraform Init
         run: terraform init
+        working-directory: terraform # Specify the working directory
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        working-directory: terraform # Specify the working directory
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -54,7 +59,7 @@ jobs:
       - name: Package Lambda function
         run: |
           mkdir -p lambda_package
-          cp -r lambda_code/* lambda_package/
+          cp -r lambda/* lambda_package/  # Adjust path if necessary
           cd lambda_package
           zip -r ../lambda_function.zip .
 
