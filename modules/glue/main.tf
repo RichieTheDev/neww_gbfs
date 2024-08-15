@@ -39,14 +39,3 @@ resource "aws_athena_database" "gbfs" {
   bucket = var.s3_bucket_name # S3 bucket for Athena results
 
 }
-resource "aws_athena_table" "trends" {
-  name          = "trends"
-  database_name = aws_athena_database.gbfs.name
-  bucket        = var.s3_bucket_name
-  key           = "athena/tables/trends.csv"
-  format        = "CSV"
-  columns {
-    name = "column_name"
-    type = "string"
-  }
-}
