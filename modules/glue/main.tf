@@ -13,7 +13,7 @@ resource "aws_athena_named_query" "create_trends_table" {
   workgroup   = "primary"
 }
 
-resource "aws_glue_catalog_database" "gbfds" {
+resource "aws_glue_catalog_database" "gbfs" {
   name = "my_new_gbfs" # Name of the Glue catalog database
 }
 
