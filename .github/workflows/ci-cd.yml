@@ -1,4 +1,4 @@
-name: Deploy GBFS Project
+name: Deploy GBFS Projects
 
 on:
   push:
@@ -37,10 +37,15 @@ jobs:
         run: terraform plan
         working-directory: terraform/
 
-  # lambda-deploy:
-  #   name: Deploy Lambda Function
-  #   runs-on: ubuntu-latest
-  #   needs: terraform
+      - name: Terraform Destroy
+        if: github.ref == 'refs/heads/main'
+        run: terraform destroy -auto-approve
+        working-directory: terraform/
+
+  lambda-deploy:
+    name: Deploy Lambda Function
+    runs-on: ubuntu-latest
+    needs: terraform
 
   #   steps:
   #     - name: Checkout code
