@@ -23,13 +23,15 @@ jobs:
           terraform_version: 1.5.0 # Use your desired Terraform version
 
       - name: Change directory to Terraform configuration
-        run: cd terraform # Change this to the directory containing your Terraform configuration files
+        run: cd terraform # Ensure this is the correct path
 
       - name: Terraform Init
         run: terraform init
+        working-directory: terraform # Ensure the working directory is correct
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        working-directory: terraform # Ensure the working directory is correct
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
