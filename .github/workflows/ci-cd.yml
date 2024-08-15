@@ -40,7 +40,7 @@ jobs:
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/main'
         run: terraform destroy -auto-approve
-        working-directory: terraform/
+        working-directory: modules/
 
   lambda-deploy:
     name: Deploy Lambda Function
