@@ -22,6 +22,11 @@ The infrastructure is built using AWS services, orchestrated with Terraform. Key
    git clone https://github.com/RichieTheDev/gbfs.git
    cd gbfs
    ```
+2. ```bash
+   cd terraform
+   terraform init
+   terraform apply
+   ```
 
 ## CI/CD Pipeline
 
