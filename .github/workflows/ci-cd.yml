@@ -55,7 +55,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r lambda/requirements.txt
-<<<<<<< HEAD
 
       - name: Create S3 bucket (if not exists)
         run: |
@@ -87,39 +86,6 @@ jobs:
       #  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #  AWS_REGION: us-east-1
-=======
-      
-      - name: Create S3 bucket (if not exists)
-        run: |
-          aws s3 mb s3://my-gbfs-test-bucket --region us-east-1 || echo "Bucket already exists"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
-
-      - name: Package Lambda function
-        run: |
-          (cd lambda && zip -r function.zip handler.py) || (cd lambda && Compress-Archive -Path handler.py -DestinationPath function.zip)
-
-      - name: Upload Lambda function to S3
-        run: |
-          aws s3 cp lambda/function.zip s3://my-gbfs-test-bucket/lambda/function.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
-
-      #- name: Deploy Lambda function
-       # run: |
-       #   aws lambda update-function-code \
-       #     --function-name gbfs_processor \
-       #    --s3-bucket my-gbfs-test-bucket \
-       #     --s3-key lambda/function.zip
-       # env:
-       #  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-       #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-       #  AWS_REGION: us-east-1
->>>>>>> b074642a3cdf82d653ea03f41b9d24204bbb987a
 
       # - name: Terraform Apply
       #   run: terraform apply -auto-approve
