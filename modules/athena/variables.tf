@@ -1,7 +1,9 @@
-variable "athena_db_name" {
-  type = string
+variable "athena_database_name" {
+  description = "The name of the Athena database"
+  type        = string
 }
 
 variable "s3_bucket_name" {
-  type = string
+  description = "The name of the S3 bucket for storing data"
+  type        = string
 }

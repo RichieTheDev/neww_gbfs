@@ -9,3 +9,10 @@ variable "quicksight_user_email" {
 variable "aws_account_id" {
   type = string
 }
+variable "athena_db_name" {
+  type = string
+}
+
+variable "s3_bucket_name" {
+  type = string
+}

@@ -1,9 +1,6 @@
-# Define an Athena database for GBFS (General Bikeshare Feed Specification) data
+# Define an Athena database
 resource "aws_athena_database" "gbfs" {
-  # The name of the Athena database, provided via a variable
-  name = var.athena_db_name
-
-  # The S3 bucket where query results will be stored, provided via a variable
+  name   = var.athena_database_name
   bucket = var.s3_bucket_name
 }
 
@@ -47,7 +44,7 @@ resource "aws_athena_named_query" "trends_query" {
   # The SQL query that calculates trends over time, read from an external file
   query = file("${path.module}/../../athena_queries/trends.sql")
 
-
   # The workgroup in which this query will be executed
   workgroup = aws_athena_workgroup.default.name
 }
+

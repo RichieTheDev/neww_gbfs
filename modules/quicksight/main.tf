@@ -1,4 +1,6 @@
 # QuickSight User
+data "aws_caller_identity" "current" {}
+
 resource "aws_quicksight_user" "default" {
   # The username for the QuickSight user
   user_name = "gbfs-user"
@@ -34,8 +36,15 @@ resource "aws_athena_named_query" "trends_query" {
   database = aws_athena_database.gbfs.name
 
   # The SQL query file for Athena. This file should be located at 'athena_queries/trends.sql'
-  query = file("athena_queries/trends.sql")
+  query = file("${path.module}/../../athena_queries/trends.sql")
 
   # The Athena workgroup in which the query will run
   workgroup = aws_athena_workgroup.default.name
+}
+resource "aws_athena_database" "gbfs" {
+  # The name of the Athena database, provided via a variable
+  name = var.athena_db_name
+
+  # The S3 bucket where query results will be stored, provided via a variable
+  bucket = var.s3_bucket_name
 }
