@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Careem BIKE",
+    "url": "https://dubai.publicbikesystem.net/customer/gbfs/v2/gbfs.json"
+  },
+  {
+    "name": "Bike Nordelta",
+    "url": "https://nordelta.publicbikesystem.net/ube/gbfs/v1/"
+  },
+  {
+    "name": "Ecobici",
+    "url": "https://www.buenosaires.gob.ar/ecobici"
+  }
+]
