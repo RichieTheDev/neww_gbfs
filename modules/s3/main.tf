@@ -1,7 +1,7 @@
 # S3 Bucket for GBFS Data
 resource "aws_s3_bucket" "gbfs_s3" {
   # Name of the S3 bucket
-  bucket = "my-gbfs-test-bucket"
+  bucket = "my-gbfs-test-bucketss"
 
   # Tags for identifying and organizing the bucket
   tags = {

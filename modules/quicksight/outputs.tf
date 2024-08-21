@@ -1,7 +1,8 @@
 output "athena_database_name" {
   description = "The name of the Athena database"
-  value       = aws_athena_database.gbfs.name
+  value       = aws_athena_database.example.name
 }
+
 
 output "athena_workgroup_name" {
   description = "The name of the Athena workgroup"

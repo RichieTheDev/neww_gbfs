@@ -1,7 +1,8 @@
 # Define a Glue catalog database to store metadata for GBFS data
 resource "aws_glue_catalog_database" "gbfs" {
   # The name of the Glue database, provided via a variable
-  name = var.glue_db_name
+  name = "mycatalogdatabase"
+
 }
 
 # Define a Glue catalog table to represent the GBFS data stored in S3

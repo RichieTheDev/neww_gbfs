@@ -1,6 +1,6 @@
 # Define an Athena database
 resource "aws_athena_database" "gbfs" {
-  name   = var.athena_database_name
+  name   = "database_bname"
   bucket = var.s3_bucket_name
 }
 

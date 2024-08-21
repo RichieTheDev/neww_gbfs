@@ -33,7 +33,7 @@ resource "aws_athena_named_query" "trends_query" {
   name = "TrendsOverTime"
 
   # The database in Athena where the query will be executed
-  database = aws_athena_database.gbfs.name
+  database = aws_athena_database.example.name
 
   # The SQL query file for Athena. This file should be located at 'athena_queries/trends.sql'
   query = file("${path.module}/../../athena_queries/trends.sql")
@@ -41,10 +41,11 @@ resource "aws_athena_named_query" "trends_query" {
   # The Athena workgroup in which the query will run
   workgroup = aws_athena_workgroup.default.name
 }
-resource "aws_athena_database" "gbfs" {
-  # The name of the Athena database, provided via a variable
-  name = var.athena_db_name
+resource "aws_s3_bucket" "example" {
+  bucket = "example"
+}
 
-  # The S3 bucket where query results will be stored, provided via a variable
-  bucket = var.s3_bucket_name
+resource "aws_athena_database" "example" {
+  name   = "database_name"
+  bucket = aws_s3_bucket.example.id
 }
